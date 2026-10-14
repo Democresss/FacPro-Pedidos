@@ -10,6 +10,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -104,6 +105,9 @@ public class MainActivity extends Activity {
         };
         ContextCompat.registerReceiver(this, receptorDescargas,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), ContextCompat.RECEIVER_EXPORTED);
+
+        // Recién actualizada: se avisa la versión nueva (así se sabe que quedó)
+        avisarSiSeActualizo();
 
         // Busca actualizaciones apenas se abre
         actualizador = new Actualizador(this);
@@ -586,6 +590,17 @@ public class MainActivity extends Activity {
         l.addView(d);
         l.addView(b);
         return l;
+    }
+
+    private void avisarSiSeActualizo() {
+        SharedPreferences sp = getSharedPreferences("app", MODE_PRIVATE);
+        String antes = sp.getString("version_vista", "");
+        if (!BuildConfig.VERSION_NAME.equals(antes)) {
+            if (!antes.isEmpty()) {
+                aviso(getString(R.string.app_name) + " actualizada a la versión " + BuildConfig.VERSION_NAME);
+            }
+            sp.edit().putString("version_vista", BuildConfig.VERSION_NAME).apply();
+        }
     }
 
     void aviso(String texto) {
