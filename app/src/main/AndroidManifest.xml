@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Se actualiza sola: descarga la versión nueva y abre el instalador -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 

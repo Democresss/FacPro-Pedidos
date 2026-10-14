@@ -57,4 +57,19 @@ public class Puente {
     public void guardarArchivo(String dataUrl, String nombre) {
         app.guardarArchivo(dataUrl, nombre);
     }
+
+    /** Hace vibrar el teléfono (p. ej. al llegar un pedido nuevo). */
+    @JavascriptInterface
+    public void vibrar(long ms) {
+        try {
+            android.os.Vibrator v = (android.os.Vibrator) app.getSystemService(android.content.Context.VIBRATOR_SERVICE);
+            if (v != null && v.hasVibrator()) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    v.vibrate(android.os.VibrationEffect.createOneShot(ms > 0 ? ms : 500, android.os.VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    v.vibrate(ms > 0 ? ms : 500);
+                }
+            }
+        } catch (Exception ignored) {}
+    }
 }
