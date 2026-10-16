@@ -57,6 +57,7 @@ jobs:
         run: |
           mkdir -p dist
           cp app/build/outputs/apk/release/app-release.apk dist/FacPro-Pedidos.apk
+          cp app/build/outputs/apk/release/app-release.apk dist/FacPro-Vendedor.apk
           printf '{"versionCode": %s, "versionName": "%s"}\n' \
             "${{ steps.version.outputs.codigo }}" "${{ steps.version.outputs.nombre }}" > dist/version.json
           ls -la dist
@@ -66,6 +67,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "v${{ steps.version.outputs.nombre }}" dist/* \
-            --title "FacPro Pedidos ${{ steps.version.outputs.nombre }}" \
-            --notes "FacPro Pedidos para Android. La app instalada se actualiza sola al abrirse." \
+            --title "FacPro Pedidos y Rutas (Vendedor Unificado) ${{ steps.version.outputs.nombre }}" \
+            --notes "APK Unificada de Vendedor y Pedidos: Incluye Toma de Pedidos + Monitor de Choferes V2 (/v2/operaciones/monitor) + GPS Rápido en una sola aplicación Android con actualización automática." \
             --latest

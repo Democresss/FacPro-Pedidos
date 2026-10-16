@@ -105,7 +105,10 @@ public class MainActivity extends Activity {
         configurarWeb();
         vigilarRed();
         if (estado == null || web.restoreState(estado) == null) {
-            web.loadUrl(BuildConfig.SITIO + BuildConfig.INICIO);
+            SharedPreferences sp = getSharedPreferences("app", MODE_PRIVATE);
+            String inicio = sp.getString("modulo_preferido", BuildConfig.INICIO);
+            if (inicio == null || !inicio.startsWith("/v2/")) inicio = BuildConfig.INICIO;
+            web.loadUrl(BuildConfig.SITIO + inicio);
         }
 
         receptorDescargas = new BroadcastReceiver() {
@@ -161,6 +164,9 @@ public class MainActivity extends Activity {
             if (sinConexion.getVisibility() == View.VISIBLE) {
                 sinConexion.setVisibility(View.GONE);
             }
+            try {
+                getSharedPreferences("app", MODE_PRIVATE).edit().putString("modulo_preferido", ruta).apply();
+            } catch (Exception ignored) {}
             web.loadUrl(BuildConfig.SITIO + ruta);
         });
         return tv;

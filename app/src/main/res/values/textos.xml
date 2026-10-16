@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FacPro Pedidos</string>
+    <string name="app_name">FacPro Pedidos y Rutas</string>
     <color name="ic_fondo">#059669</color>
 </resources>
